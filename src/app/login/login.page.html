@@ -1,0 +1,58 @@
+<ion-content [fullscreen]="true">
+  <div class="relative min-h-full flex flex-col items-center justify-center px-6 py-10 overflow-hidden">
+
+    <!-- resplandor ambiental -->
+    <div class="pointer-events-none absolute left-1/2 top-[18%] -translate-x-1/2 w-[420px] h-[420px] rounded-full"
+         style="background: radial-gradient(circle, rgba(255,126,95,.22) 0%, rgba(255,160,122,.08) 45%, rgba(8,8,10,0) 70%)"></div>
+
+    <div class="relative w-full max-w-sm flex flex-col items-center">
+      <h1 class="font-sans font-extralight text-5xl tracking-tight text-white/90">MELL</h1>
+      <p class="mt-3 font-sans text-[11px] font-medium uppercase tracking-[0.16em] text-white/50">
+        Tu compañía, siempre cerca
+      </p>
+
+      <form class="mt-14 w-full flex flex-col gap-4" (ngSubmit)="enter()">
+        <input
+          name="email" type="email" autocomplete="email"
+          [(ngModel)]="email" placeholder="CORREO"
+          class="w-full rounded-full bg-obsidian/70 border border-hairline px-6 py-4 text-sm font-light tracking-widest text-white/90 placeholder-white/30 outline-none focus:border-peach/50 focus:shadow-halo transition" />
+
+        <input
+          name="password" type="password" autocomplete="current-password"
+          [(ngModel)]="password" placeholder="CONTRASEÑA"
+          class="w-full rounded-full bg-obsidian/70 border border-hairline px-6 py-4 text-sm font-light tracking-widest text-white/90 placeholder-white/30 outline-none focus:border-peach/50 focus:shadow-halo transition" />
+
+        @if (error()) {
+        <p class="text-center text-xs font-light tracking-wide text-blush">{{ error() }}</p>
+        }
+
+        <button type="submit" [disabled]="loading()"
+                class="mt-2 w-full rounded-full bg-white/90 py-4 font-sans text-[13px] font-medium uppercase tracking-[0.12em] text-void disabled:opacity-50 transition">
+          {{ loading() ? 'Entrando…' : 'Enter' }}
+        </button>
+      </form>
+
+      <div class="my-8 flex w-full items-center gap-4">
+        <div class="h-px flex-1 bg-hairline"></div>
+        <span class="text-[9px] font-semibold uppercase tracking-[0.22em] text-white/30">o</span>
+        <div class="h-px flex-1 bg-hairline"></div>
+      </div>
+
+      @if (isNative) {
+      <button type="button" (click)="googleNative()"
+              class="w-full rounded-full bg-white/5 hover:bg-white/10 py-4 font-sans text-[13px] font-medium uppercase tracking-[0.12em] text-white/75 transition">
+        Continuar con Google
+      </button>
+      } @else {
+      <div class="flex w-full justify-center">
+        <div #googleBtn class="min-h-[44px] w-full"></div>
+      </div>
+      }
+
+      <p class="mt-10 text-[11px] font-medium uppercase tracking-[0.16em] text-white/50">
+        ¿Nuevo aquí?
+        <a routerLink="/register" class="ml-1 text-peach">Registrar MELL</a>
+      </p>
+    </div>
+  </div>
+</ion-content>

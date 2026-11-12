@@ -35,3 +35,31 @@
 /* @import "@ionic/angular/css/palettes/dark.always.css"; */
 /* @import "@ionic/angular/css/palettes/dark.class.css"; */
 @import '@ionic/angular/css/palettes/dark.system.css';
+
+@import "@ionic/angular/css/palettes/dark.always.css";
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --ion-font-family: 'Plus Jakarta Sans', sans-serif;
+  --ion-background-color: #08080a;
+  --ion-text-color: rgba(255, 255, 255, 0.9);
+
+  --ion-color-primary: #ff7e5f;
+  --ion-color-primary-rgb: 255, 126, 95;
+  --ion-color-primary-contrast: #3d0700;
+  --ion-color-primary-contrast-rgb: 61, 7, 0;
+  --ion-color-primary-shade: #e06f54;
+  --ion-color-primary-tint: #ff8b6e;
+}
+
+body {
+  background: #08080a;
+  -webkit-font-smoothing: antialiased;
+}
+
+ion-content {
+  --background: #08080a;
+}

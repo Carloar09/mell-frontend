@@ -1,20 +1,72 @@
-<ion-header [translucent]="true">
-  <ion-toolbar>
-    <ion-title>
-      Blank
-    </ion-title>
-  </ion-toolbar>
-</ion-header>
-
 <ion-content [fullscreen]="true">
-  <ion-header collapse="condense">
-    <ion-toolbar>
-      <ion-title size="large">Blank</ion-title>
-    </ion-toolbar>
-  </ion-header>
+  <div class="relative min-h-full flex flex-col items-center justify-between px-6 py-8 overflow-hidden">
 
-  <div id="container">
-    <strong>Ready to create an app?</strong>
-    <p>Start with Ionic <a target="_blank" rel="noopener noreferrer" href="https://ionicframework.com/docs/components">UI Components</a></p>
+    <!-- aura ambiental -->
+    <div class="pointer-events-none absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 w-[520px] h-[520px] rounded-full transition-opacity duration-700"
+         [class.opacity-40]="state() === 'idle'"
+         style="background: radial-gradient(circle, rgba(255,126,95,.22) 0%, rgba(255,160,122,.08) 45%, rgba(8,8,10,0) 70%)"></div>
+
+    <!-- barra superior -->
+    <div class="relative z-10 flex w-full items-center justify-between">
+      <span class="font-sans text-[11px] font-medium uppercase tracking-[0.16em] text-white/50">MELL</span>
+      <button type="button" (click)="logout()"
+              class="text-[11px] font-medium uppercase tracking-[0.16em] text-white/30 hover:text-white/60 transition">
+        Salir
+      </button>
+    </div>
+
+    <!-- orbe + bloque de sintonía -->
+    <div class="relative z-10 flex flex-col items-center">
+      <div class="relative flex h-[260px] w-[260px] items-center justify-center">
+        @if (state() === 'speaking') {
+        <span class="ring"></span>
+        <span class="ring ring-delay"></span>
+        }
+        <button type="button" (click)="toggle()" aria-label="Hablar con MELL"
+                class="orb outline-none"
+                [class.idle]="state() === 'idle'"
+                [class.listening]="state() === 'listening'"
+                [class.processing]="state() === 'processing'"
+                [class.speaking]="state() === 'speaking'"
+                [style.transform]="state() === 'listening' ? 'scale(' + scale() + ')' : null">
+        </button>
+      </div>
+
+      <div class="mt-8 flex flex-col items-center gap-3 text-center">
+        <p class="font-sans text-[11px] font-medium uppercase tracking-[0.16em] text-peach/90">
+          Cadence: Silent Resonance
+        </p>
+        <p class="font-sans text-base font-light leading-relaxed text-white/75">
+          Habla libremente. Mell está en sintonía contigo.
+        </p>
+      </div>
+
+      <div class="mt-8 flex items-center gap-1 rounded-full border border-hairline bg-obsidian/80 p-1.5 backdrop-blur-xl">
+        @for (seg of segments; track seg.key) {
+        <span class="rounded-full px-5 py-2.5 font-sans text-[10px] font-semibold uppercase tracking-[0.12em] transition-colors duration-500"
+              [class]="active() === seg.key ? 'bg-white/10 text-white' : 'text-white/40'">
+            {{ seg.label }}
+          </span>
+        }
+      </div>
+    </div>
+
+    <!-- zona inferior: solo errores y la tarjeta de crisis -->
+    <div class="relative z-10 flex min-h-[100px] w-full max-w-md flex-col items-center justify-end gap-4">
+      @if (error()) {
+      <p class="text-center text-xs font-light tracking-wide text-blush">{{ error() }}</p>
+      }
+
+      @if (crisis()) {
+      <div class="w-full rounded-3xl border border-peach/40 bg-obsidian/80 p-6 backdrop-blur-xl">
+        <p class="text-[11px] font-medium uppercase tracking-[0.16em] text-peach">Estoy contigo</p>
+        <p class="mt-3 text-sm font-light leading-relaxed text-white/90">{{ crisis() }}</p>
+        <button type="button" (click)="dismissCrisis()"
+                class="mt-5 w-full rounded-full bg-white/5 py-3 text-[11px] font-medium uppercase tracking-[0.16em] text-white/75 hover:bg-white/10 transition">
+          Entendido
+        </button>
+      </div>
+      }
+    </div>
   </div>
 </ion-content>
